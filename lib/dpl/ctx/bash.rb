@@ -387,6 +387,15 @@ module Dpl
         end
       end
 
+      def git_branch
+        TRAVIS['TRAVIS_BRANCH'] || `git rev-parse --abbrev-ref HEAD`.chomp
+      end
+
+      # Returns the author of the commit `git_sha`.
+      def git_commit_author
+        `git log #{git_sha} -n 1 --pretty="%aN"`.chomp
+      end
+
       # Returns the message of the commit `git_sha`.
       def git_commit_msg
         `git log #{git_sha} -n 1 --pretty=%B`.chomp
